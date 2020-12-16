@@ -3,14 +3,12 @@ import { Injectable } from "@angular/core";
 import { UsuarioModel } from "../models/usuario.model";
 
 import { map } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  private url = "https://identitytoolkit.googleapis.com/v1/accounts:";
-  private apiKey = "AIzaSyAvOqYkrLKCpzq0hICgY0cLZKtDNeI0TL4";
-
   userToken: string;
   // expiresIn: string;
 
@@ -37,7 +35,10 @@ export class AuthService {
     };
 
     return this.http
-      .post(`${this.url}signInWithPassword?key=${this.apiKey}`, authData)
+      .post(
+        `${environment.url}signInWithPassword?key=${environment.apiKey}`,
+        authData
+      )
       .pipe(this.mapToken());
   }
 
@@ -50,7 +51,7 @@ export class AuthService {
     };
 
     return this.http
-      .post(`${this.url}signUp?key=${this.apiKey}`, authData)
+      .post(`${environment.url}signUp?key=${environment.apiKey}`, authData)
       .pipe(this.mapToken());
   }
 
